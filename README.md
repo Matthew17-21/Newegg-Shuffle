@@ -4,7 +4,7 @@ Python module(s) to help you with the Newegg raffle
 # How to use
 ```
 $ git clone https://github.com/Matthew17-21/Newegg-Shuffle
-$ cd Newegg-Raffle
+$ cd Newegg-Shuffle
 $ pip3 install -r requirements.txt
 $ python3 main.py
 ```
