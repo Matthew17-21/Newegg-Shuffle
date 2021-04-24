@@ -1,0 +1,22 @@
+{
+    "output_filename": "Successfully created accounts.log",
+    "captcha": {
+        "version": "v3",
+        "captcha_solver": "anticaptcha",
+        "keys": {
+            "2captcha": "YOUR 2CAPTCHA KEY",
+            "capmonster": "YOUR CAPMONSTER KEY",
+            "anticaptcha": "YOUR ANTICAPTCHA KEY"
+        }
+    },
+    "password": {
+        "generate_random": true,
+        "choices": [
+            "NotARandomPassword123!",
+            "Ifgenerate_randomIsSetToTrue...NoneOfTheseGetUsed!1!",
+            "Also,IfYouHaventNoticed,!!1!",
+            "ThereNeedsToBeANumberAndSpecialChar!12!"
+        ]
+    }
+    
+}

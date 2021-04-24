@@ -1,0 +1,6 @@
+captchatools
+requests
+bs4
+colorama
+names
+pycryptodome
