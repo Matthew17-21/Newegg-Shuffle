@@ -1,3 +1,4 @@
+import os
 import requests
 from requests import exceptions as requestsExceptions
 import sys
@@ -23,13 +24,17 @@ from . import static_data, Accertify
 
 class Create_Account:
     def __init__(self, NeweggParent:object, email):
+        # I don't like how I'm passing these in. I'm going to change this soon.
+        logging.basicConfig(filename=NeweggParent.settings["output_filename"], level=logging.INFO)
         self.screenlock = NeweggParent.screenlock
         self.captcha_solver = NeweggParent.captcha_solver
+        self.sema = NeweggParent.sema
+        self.PATH_PROXIES  = NeweggParent.PATH_PROXIES
 
+        # Define basic info
         self.current_task = email
         self.email = email
         self.logging_data = {}
-
         if NeweggParent.settings["password"]["generate_random"]:
             self.password = self.randompassword()
         else:
@@ -39,17 +44,31 @@ class Create_Account:
         self.HEADERS_getPages = static_data.HEADERS_getPages.copy()
         self.HEADERS_createAccountPOST = static_data.HEADERS_createAccountPOST.copy()
 
+        # Update Headers
+        user_agent = random.choice(NeweggParent.settings["user_agents"]["desktop"])
+        self.HEADERS_getPages["user-agent"] = user_agent
+        self.HEADERS_createAccountPOST["user-agent"] = user_agent
+
+        self.start()
+        
+
 
     def start(self):
         self.getProxy()
         self.get_ticket_id()
         if self.create_account():
             self.get_cookies()
-        return self.logging_data
+        
+        logging.info("{}:{}".format(
+            self.email,
+            json.dumps(self.logging_data)
+        ))
+        self.sema.release()
+        return
 
     def get_ticket_id(self):
         '''
-        This method will get the token for the POST URL
+        The get_ticket_id methods returns an ID that is used in POST URL's to create account
         '''
         self.screenlock.acquire()
         print(Fore.CYAN + '{}'.format(datetime.datetime.now()),Fore.MAGENTA + "{}".format(self.current_task), Fore.YELLOW +  "Getting Ticket ID...")
@@ -84,7 +103,7 @@ class Create_Account:
 
     def create_account(self):
         '''
-        This method will create the account
+        The create_account is called once all the info is gather and creates accounts.
         '''
         POSTURL_createAccount = f"https://secure.newegg.com/identity/api/SignUp?ticket={self.tkToken}"
         GETURL_tokenData = f"https://secure.newegg.com/identity/api/InitSignUp?ticket={self.tkToken}"
@@ -146,8 +165,6 @@ class Create_Account:
                     self.screenlock.release()
                     self.session.cookies.clear()
                     self.get_ticket_id()
-
-
                 elif "CustomerAddLoginNameDuplicate" in response.text:
                     self.screenlock.acquire()
                     print(Fore.CYAN + '{}'.format(datetime.datetime.now()),Fore.MAGENTA + "{}".format(self.current_task), Fore.CYAN +  "Email already had an account. Stopping.")
@@ -228,7 +245,7 @@ class Create_Account:
 
     def getProxy(self):
         # Load proxy from file
-        with open("./data/proxies.txt", "r") as file:
+        with open(self.PATH_PROXIES) as file:
             proxies = file.readlines()
         if len(proxies) > 0:
             line = proxies[random.randint(0, len(proxies) - 1)].strip("\n").split(":")

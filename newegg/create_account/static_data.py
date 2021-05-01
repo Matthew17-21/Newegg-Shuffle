@@ -31,7 +31,7 @@ HEADERS_getPages = {
     "sec-fetch-site": "none",
     "sec-fetch-user": "?1",
     "upgrade-insecure-requests": "1",
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+    "user-agent": ""
 }
 global HEADERS_createAccountPOST
 HEADERS_createAccountPOST = {
@@ -46,7 +46,7 @@ HEADERS_createAccountPOST = {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
+    "user-agent": "",
     "x-ua-pki": "ne200508|ne200509"
 }
 
@@ -73,7 +73,7 @@ HEADERS_getTicketID = {
     "Upgrade-Insecure-Requests": "1",
     "Origin": "null",
     "Content-Type": "application/x-www-form-urlencoded",
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+    "User-Agent": "",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "X-Requested-With": "com.newegg.app",
     "Sec-Fetch-Site": "cross-site",
@@ -87,7 +87,7 @@ global HEADERS_getFormKeys
 HEADERS_getFormKeys = {
     "Host": "secure.newegg.com",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+    "User-Agent": "",
     "Accept-Language": "en-us",
     "Accept-Encoding": "gzip, deflate",
     "Connection": "keep-alive"
@@ -102,7 +102,7 @@ HEADERS_createAccount = {
     "Accept-Language": "en-us",
     "Content-Type": "application/json",
     "Origin": "https://secure.newegg.com",
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+    "User-Agent": "",
     "Connection": "keep-alive",
     "Referer": ""
 }
@@ -112,7 +112,7 @@ HEADERS_afterCreate = {
     "Host": "secure.m.newegg.com",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Connection": "keep-alive",
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+    "User-Agent": "",
     "Accept-Language": "en-us",
     "Referer": "",
     "Accept-Encoding": "gzip, deflate"
