@@ -26,13 +26,26 @@ $ python3 main.py
 | keys | dict | dict containing keys to solving sites | - |
 | generate_random | bool | Should the program generate random password. | `true` or `false` |
 | choices | array | Array of password choices | - |
-
+| user_agents| array | Array of user-agents for mobile & desktop | - |
 
 ### /newegg/*
 - Contains the core software code. 
 
+# Creating Accounts
+- If you want to create accounts via mobile, change line 93 in `main.py` from `desktop.Create_Account(self, email)` to `mobile.Create_Account(self, email)`
+    * And vice versa 
+- MAKE SURE YOU STORE YOUR SESSIONS SOMEWHERE (Don't delete the `.log` file)
+
+# Submitting Entries
+- In order to submit entries, you must make sure:
+    * The program will pull accounts/sessions from the filename that was used to create accounts (`output_filename` in the settings.json file).
+    * Your .log file is in the main directory (alongside with `main.py`)
+    * Accounts/Sessions are still in the .log file
+    * The program will automatically enter on the same platform as the account was created (Desktop or App)
+    * MAKE SURE YOU KEEP YOUR SESSIONS (Don't delete the `.log` file)
+
 # Recommendations
-1. **MAKE SURE YOU STORE YOUR SESSIONS SOMEWHERE**
+1. **MAKE SURE YOU STORE YOUR SESSIONS SOMEWHERE (Don't delete the `.log` file)**
 2. Althought not completely necessary, but you should add/delete/randomify events for accertify.
 3. Make sure iOS app version is up to date
 4. Handle exceptions better
@@ -47,12 +60,23 @@ $ python3 main.py
     * I recommend using anticaptcha for V3, but Capmonster & 2Captcha is also available.
 - Only tested on Python 3.7
     * *Should* work on other versions, but I can't promise anything.
-- This is intended for devs, so try not to change too much code as it might break something.
+- This is intended for devs. If you aren't familiar with python, try not to change too much code as it might break something.
 - This isn't a reflection of how I actually write code so pls don't judge too hard :joy:
     * I've been writing in Go lately, hence the structure of the whole thing.
-- If you want to create accounts via mobile, change line 79 in `main.py` from `desktop.Create_Account(self, email)` to `mobile.Create_Account(self, email)`
-    * And vice versa 
-- There are lots of ways to make this better, cleaner and better on memory. If I find till I'll update this repo.
+- There are lots of ways to make this better, cleaner and better on memory. If I find time, I'll update this repo.
+
+
+# Maintenance
+- This bot is fully functional with success. I won't be working on it much. I'll only work on it when:
+    * They make some massive change
+    * Have *loads* of free time and can complete the [to do list](https://github.com/Matthew17-21/Newegg-Shuffle#to-do)
+- Pull requests are always welcome
+- If any issues were to arise, [open an issue](https://github.com/Matthew17-21/Newegg-Shuffle/issues/new)
+    * Please incude:
+        * Python version
+        * Error
+        * How to replicate
+- You may also contact me on discord - `Matthew#6937` with any questions or concerns
 
 # FAQ
 1. Does this work out of the box?
@@ -68,8 +92,12 @@ $ python3 main.py
 
 # Success
 ![Genning](https://i.imgur.com/lvrTp36.png)
+![Running](https://i.imgur.com/r8gPUIq.png)
 ![Success](https://i.imgur.com/8csUoqR.png)
 
 # TO DO 
-1. [] Clean up code
-2. [] Update documentation
+1. [] Clean up & document code
+2. [] Release GUI version
+3. [] Maybe a folder for logs?
+4. [] Release in Go
+5. [] Inherit, don't pass.

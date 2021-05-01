@@ -1,4 +1,5 @@
 {
+    "ios_app_version": "6.23.0",
     "output_filename": "Successfully created accounts.log",
     "captcha": {
         "version": "v3",
@@ -16,6 +17,14 @@
             "Ifgenerate_randomIsSetToTrue...NoneOfTheseGetUsed!1!",
             "Also,IfYouHaventNoticed,!!1!",
             "ThereNeedsToBeANumberAndSpecialChar!12!"
+        ]
+    },
+    "user_agents": {
+        "mobile":[
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1"
+        ],
+        "desktop":[
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
         ]
     }
     

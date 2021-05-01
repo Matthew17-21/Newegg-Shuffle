@@ -19,21 +19,25 @@ import base64
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
 from Crypto.PublicKey import RSA
 from . import static_data, Accertify
-
+from threading import Thread
 POSTURL_ticketID = "https://secure.m.newegg.com//Application/UnifiedLogin/Landingpage"
 
 
 
 class Create_Account:
     def __init__(self, NeweggParent:object, email):
+        # I don't like how I'm passing these in. I'm going to change this soon.
+        logging.basicConfig(filename=NeweggParent.settings["output_filename"], level=logging.INFO)
         self.screenlock = NeweggParent.screenlock
         self.captcha_solver = NeweggParent.captcha_solver
+        self.sema = NeweggParent.sema
+        self.PATH_PROXIES  = NeweggParent.PATH_PROXIES
+
 
         # Define basic info
         self.current_task = email
         self.email = email
         self.logging_data = {}
-
         if NeweggParent.settings["password"]["generate_random"]:
             self.password = self.randompassword()
         else:
@@ -47,14 +51,32 @@ class Create_Account:
         self.HEADERS_createAccount = static_data.HEADERS_createAccount
         self.HEADERS_afterCreate = static_data.HEADERS_afterCreate
 
+        # Update Headers
+        user_agent = random.choice(NeweggParent.settings["user_agents"]["mobile"])
+        self.HEADERS_getTicketID["User-Agent"] = user_agent
+        self.HEADERS_getFormKeys["User-Agent"] = user_agent
+        self.HEADERS_createAccount["User-Agent"] = user_agent
+        self.HEADERS_afterCreate["User-Agent"] = user_agent
+
+        self.start()
+
     def start(self):
         self.getProxy()
         self.get_ticket_id()
         if self.create_account():
             self.get_cookies()
-        return self.logging_data
+        
+        logging.info("{}:{}".format(
+            self.email,
+            json.dumps(self.logging_data)
+        ))
+        self.sema.release()
+        return
 
     def get_ticket_id(self):
+        '''
+        The get_ticket_id methods returns an ID that is used in POST URL's to create account
+        '''
         while True:
             try:
                 # Get Cookies
@@ -63,7 +85,6 @@ class Create_Account:
                 self.screenlock.release()
                 GETURL_getCookies = "https://www.newegg.com/mycountry?CompanyCode=1003&CountryCode=USA&LanguageCode=en-US&RegionCode=USA&t={}".format(round(time.time()))
                 self.session.get(GETURL_getCookies, headers=self.HEADERS_getCookies)
-
 
 
                 # Get Ticket ID
@@ -94,6 +115,9 @@ class Create_Account:
                 continue
 
     def create_account(self):
+        '''
+        The create_account is called when all the info is gather and creates accounts.
+        '''
         POSTURL_createAccount = f"https://secure.newegg.com/identity/api/SignUp?ticket={self.ticketID}"
         GETURL_tokenData = f"https://secure.newegg.com/identity/api/InitSignUp?ticket={self.ticketID}"
         self.HEADERS_createAccount["Referer"] = self.ticketURL
@@ -189,7 +213,7 @@ class Create_Account:
 
     def getProxy(self):
         # Load proxy from file
-        with open("./data/proxies.txt", "r") as file:
+        with open(self.PATH_PROXIES, "r") as file:
             proxies = file.readlines()
         if len(proxies) > 0:
             line = proxies[random.randint(0, len(proxies) - 1)].strip("\n").split(":")
