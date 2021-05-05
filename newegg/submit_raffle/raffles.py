@@ -15,9 +15,13 @@ def get_items():
                 for raffle_item in products["ChildItem"]:
                     # Get the item(s) in the combo
                     combo_items = [] # Products that you can select to enter the raffle for
-                    for item in raffle_item["ComboItems"]:
-                        combo_items.append(item["Title"])
-                    items_name = " & ".join(combo_items)
+
+                    if raffle_item["ComboItems"] == None:
+                        items_name = raffle_item["Title"]
+                    else:    
+                        for item in raffle_item["ComboItems"]:
+                            combo_items.append(item["Title"])
+                        items_name = " & ".join(combo_items)
 
                     # Get the ID of the combo/item to enter the raffle & price
                     item_id= raffle_item["ItemNumber"] # This is used to enter the raffle
