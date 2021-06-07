@@ -1,0 +1,7 @@
+*.xml
+*.pyc
+*.log
+t.py
+*.iml
+*.txt
+*.json

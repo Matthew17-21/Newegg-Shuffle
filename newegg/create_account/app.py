@@ -10,6 +10,9 @@ import logging
 import colorama
 from colorama import Fore, Back, Style
 from colorama import init
+
+from ..utils.get_proxy import return_proxy
+
 colorama.init()
 init(autoreset=True)
 import threading
@@ -212,22 +215,7 @@ class Create_Account:
                 continue
 
     def getProxy(self):
-        # Load proxy from file
-        with open(self.PATH_PROXIES, "r") as file:
-            proxies = file.readlines()
-        if len(proxies) > 0:
-            line = proxies[random.randint(0, len(proxies) - 1)].strip("\n").split(":")
-            if len(line) == 2: #if proxy length is ==2, its an IP Auth proxy
-                line = proxies[random.randint(0, len(proxies) - 1)].strip("\n")
-                proxy= {
-                    'http':line,
-                    'https':line,
-                    }
-            
-            else:#if proxy length is anything else, its an USER:PASS
-                proxy = {'http': 'http://' + line[2] + ":" + line[3] + "@" + line[0] + ":" + line[1] + "/",
-                        'https': 'https://' + line[2] + ":" + line[3] + "@" + line[0] + ":" + line[1] + "/"}
-            self.session.proxies.update(proxy)
+        self.session.proxies.update(return_proxy())
         return
 
     def get_cookies(self):
