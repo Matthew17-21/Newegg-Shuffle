@@ -6,11 +6,11 @@ import requests
 
 def get_items():
     temp = []
+    s = requests.Session()
     while True:
         try:
-            s = requests.Session()
             res = s.get("https://www.newegg.com/product-shuffle")
-            raffle_products =  json.loads(re.findall(r"{.+[:,].+}", res.text)[1].split("</script>")[0])
+            raffle_products =  json.loads(re.findall(r"(?<=window\.__initialState__[^{]\S.)(.*?)(?=<\/script>)", res.text)[0])
             for products in raffle_products["lotteryData"]["LotteryItems"]:
                 for raffle_item in products["ChildItem"]:
                     # Get the item(s) in the combo
