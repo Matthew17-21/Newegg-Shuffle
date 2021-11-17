@@ -96,8 +96,8 @@ $ python3 main.py
 ![Success](https://i.imgur.com/8csUoqR.png)
 
 # TO DO 
-1. [] Clean up & document code
-2. [] Release GUI version
-3. [] Maybe a folder for logs?
-4. [] Release in Go
-5. [] Inherit, don't pass.
+1. [ ] Clean up & document code
+2. [ ] Release GUI version
+3. [ ] Maybe a folder for logs?
+4. [ ] Release in Go
+5. [ ] Inherit, don't pass.
